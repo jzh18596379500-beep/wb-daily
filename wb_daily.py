@@ -114,7 +114,7 @@ def do_checkin(domain, token, dry):
 
 
 def do_travel(domain, token, dry):
-    st, body = call(domain, token, PATHS["travel_status"])
+    st, body = call(domain, token, PATHS["travel_status"], method="GET")
     data = data_of(st, body)
     state = data.get("state")
     if isinstance(state, dict):
