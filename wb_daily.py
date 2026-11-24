@@ -206,15 +206,14 @@ def main():
         try:
             result["travel"] = do_travel(domain, token, args.dry_run)
         except ApiError as exc:
-            result["travel"] = {"log": ["旅行失败：%s" % exc]}
-            errors.append(str(exc))
+            # 猫猫属于锦上添花，失败不算整体失败（常见：账号未激活 Buddy）
+            result["travel"] = {"log": ["跳过：%s" % exc]}
 
     if not args.no_box:
         try:
             result["box"] = do_box(domain, token, args.dry_run, args.max_box)
         except ApiError as exc:
-            result["box"] = {"message": "盲盒失败：%s" % exc}
-            errors.append(str(exc))
+            result["box"] = {"message": "跳过：%s" % exc}
 
     try:
         st, body = call(domain, token, PATHS["status"])
